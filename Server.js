@@ -20,7 +20,14 @@ app.post("/api/movies", async (req,res)=>{
   await db.addNewMovie(req.body);
   res.status(201).json({message: "Movie created"});
 });
+app.get("/api/movies", (req,res)=>{
+  db.getAllMovies(req.query.page, req.query.perPage, req.query.title).then(data=>{
+    res.json(data);
+  }).catch(err=>{
+    res.status(404).json({message: err});
+  })
 
+});
 //get one movie
 app.get("/api/movies/:id", async (req,res)=>{
   try{
